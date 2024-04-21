@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Animator animator;
-    // Start is called before the first frame update
-    void Start()
-    {
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private BoxCollider2D boxCol;
 
+    //Collider Variables
+    private Vector2 boxColInitSize;
+    private Vector2 boxColInitOffset;
+
+    private void Start()
+    {
+        //Fetching initial collider properties
+        boxColInitSize = boxCol.size;
+        boxColInitOffset = boxCol.offset;
     }
 
-    // Update is called once per frame
-    private void Update()
+    public void Update()
     {
         float speed = Input.GetAxisRaw("Horizontal");
-        animator.SetFloat("Speed", Mathf.Abs(speed));
+        playerAnimator.SetFloat("Speed", Mathf.Abs(speed));
 
-
+        //Flipping the player
         Vector3 scale = transform.localScale;
         if (speed < 0)
         {
@@ -29,35 +35,55 @@ public class PlayerController : MonoBehaviour
         }
         transform.localScale = scale;
 
-
-
-        float vertical = Input.GetAxisRaw("Vertical");
-        if (vertical > 0)
-        {
-            animator.SetBool("Jump", true);
-        }
-        else
-        {
-            animator.SetBool("Jump", false);
-        }
+        float VerticalInput = Input.GetAxis("Vertical");
+        PlayJumpAnimation(VerticalInput);
 
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            animator.SetBool("Crouch", true);
-            // Resize the collider here
+            Crouch(true);
         }
         else
         {
-            animator.SetBool("Crouch", false);
-            // Reset the collider size here
+            Crouch(false);
         }
-
-
-
     }
 
+    public void Crouch(bool crouch)
+    {
+        if (crouch == true)
+        {
+            // Values when player is crouching
+            float offX = -0.11f;     //Offset X
+            float offY = 0.6f;       //Offset Y
 
+            float sizeX = 0.78f;     //Size X
+            float sizeY = 1.29f;     //Size Y
 
+            boxCol.size = new Vector2(sizeX, sizeY);   //Setting the size of collider
+            boxCol.offset = new Vector2(offX, offY);   //Setting the offset of collider
+        }
+        else
+        {
+            // Values when player is idle
+            float offX = 0.01690394f;     //Offset X
+            float offY = 0.9858862f;      //Offset Y
 
+            float sizeX = 0.6145657f;     //Size X
+            float sizeY = 2.080524f;      //Size Y
 
+            boxCol.size = new Vector2(sizeX, sizeY);   //Setting the size of collider
+            boxCol.offset = new Vector2(offX, offY);   //Setting the offset of collider
+        }
+
+        //Play Crouch animation
+        playerAnimator.SetBool("Crouch", crouch);
+    }
+
+    public void PlayJumpAnimation(float vertical)
+    {
+        if (vertical > 0)
+        {
+            playerAnimator.SetTrigger("Jump");
+        }
+    }
 }

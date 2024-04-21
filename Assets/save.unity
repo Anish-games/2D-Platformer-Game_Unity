@@ -136,7 +136,7 @@ Animation:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215851986}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Animation: {fileID: 0}
   m_Animations:
@@ -158,7 +158,7 @@ Animator:
   m_GameObject: {fileID: 215851986}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: eb2082a7e33caa6458fad4d6636069c7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 10513fdb58246d54b876ba0db6b84947, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -203,7 +203,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.016903937, y: 0.9858862}
+  m_Offset: {x: 0.01690394, y: 0.9858862}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.42, y: 0.1}
@@ -214,7 +214,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.61456573, y: 2.0805242}
+  m_Size: {x: 0.6145657, y: 2.080524}
   m_EdgeRadius: 0
 --- !u!114 &215851995
 MonoBehaviour:
@@ -223,12 +223,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215851986}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b7bf58a11507794c9dcd179da3d852e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 215851990}
+  playerAnimator: {fileID: 215851990}
+  boxCol: {fileID: 215851994}
 --- !u!1 &1134323908
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +361,7 @@ PrefabInstance:
     - target: {fileID: 144515845112200649, guid: 6a5ee26a4a398ac428c81b639a963335,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.042
       objectReference: {fileID: 0}
     - target: {fileID: 144515845112200649, guid: 6a5ee26a4a398ac428c81b639a963335,
         type: 3}
