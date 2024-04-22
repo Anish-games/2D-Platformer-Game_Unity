@@ -11,6 +11,15 @@ public class PlayerController : MonoBehaviour
     private Vector2 boxColInitSize;
     private Vector2 boxColInitOffset;
 
+    public float speed;
+    public float jump;
+    private Rigidbody2D rd2d;
+
+    private void Awake () 
+    {
+        rd2d = gameObject.GetComponent<Rigidbody2D>();
+    }
+
     private void Start()
     {
         //Fetching initial collider properties
@@ -20,35 +29,55 @@ public class PlayerController : MonoBehaviour
 
     public void Update()
     {
-        float speed = Input.GetAxisRaw("Horizontal");
-        playerAnimator.SetFloat("Speed", Mathf.Abs(speed));
+        float horizontal = Input.GetAxisRaw("Horizontal");
+       
+        float verticalJump = Input.GetAxisRaw("Jump");
 
+        playerNewAnimationHorizontal(horizontal, verticalJump);
+        //playerNewAnimationVertical(vertical);
+        MoveCharater(horizontal, verticalJump);
+    }
+    private void playerNewAnimationHorizontal(float horizontal, float verticalJump)
+    {
+        playerAnimator.SetFloat("Speed", Mathf.Abs(horizontal));
         //Flipping the player
         Vector3 scale = transform.localScale;
-        if (speed < 0)
+        if (horizontal < 0)
         {
             scale.x = -1f * Mathf.Abs(scale.x);
         }
-        else if (speed > 0)
+        else if (horizontal > 0)
         {
             scale.x = Mathf.Abs(scale.x);
         }
         transform.localScale = scale;
 
-        float VerticalInput = Input.GetAxis("Vertical");
-        PlayJumpAnimation(VerticalInput);
-
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (verticalJump > 0)                                 //jump
         {
-            Crouch(true);
+            playerAnimator.SetBool("Jump", true);
         }
         else
         {
-            Crouch(false);
+            playerAnimator.SetBool("Jump", false);
         }
     }
+    
+    private void MoveCharater(float horizontal, float verticalJump)
+    {//Character movements horizontal
+        Vector3 position = transform.position;
+        position.x = position.x + horizontal * speed * Time.deltaTime;
+        transform.position = position;
 
-    public void Crouch(bool crouch)
+        //Character movements vertical
+        if (verticalJump > 0)
+        {
+            rd2d.AddForce(new Vector2(0f, jump), ForceMode2D.Force);
+
+        }
+
+    }
+
+    public void Crouch(bool crouch)                //croch
     {
         if (crouch == true)
         {
@@ -79,11 +108,5 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("Crouch", crouch);
     }
 
-    public void PlayJumpAnimation(float vertical)
-    {
-        if (vertical > 0)
-        {
-            playerAnimator.SetTrigger("Jump");
-        }
-    }
+
 }
