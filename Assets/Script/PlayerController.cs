@@ -15,7 +15,9 @@ public class PlayerController : MonoBehaviour
     public float jump;
     private Rigidbody2D rd2d;
 
-    private void Awake () 
+    private bool isJumping;
+
+    private void Awake()
     {
         rd2d = gameObject.GetComponent<Rigidbody2D>();
     }
@@ -30,13 +32,17 @@ public class PlayerController : MonoBehaviour
     public void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
-       
         float verticalJump = Input.GetAxisRaw("Jump");
 
+        if (Input.GetButtonDown("Jump") && !isJumping)
+        {
+            isJumping = true;
+        }
+
         playerNewAnimationHorizontal(horizontal, verticalJump);
-        //playerNewAnimationVertical(vertical);
         MoveCharater(horizontal, verticalJump);
     }
+
     private void playerNewAnimationHorizontal(float horizontal, float verticalJump)
     {
         playerAnimator.SetFloat("Speed", Mathf.Abs(horizontal));
@@ -61,23 +67,23 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("Jump", false);
         }
     }
-    
+
     private void MoveCharater(float horizontal, float verticalJump)
-    {//Character movements horizontal
+    {
+        //Character movements horizontal
         Vector3 position = transform.position;
         position.x = position.x + horizontal * speed * Time.deltaTime;
         transform.position = position;
 
         //Character movements vertical
-        if (verticalJump > 0)
+        if (isJumping)
         {
-            rd2d.AddForce(new Vector2(0f, jump), ForceMode2D.Force);
-
+            rd2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
+            isJumping = false;
         }
-
     }
 
-    public void Crouch(bool crouch)                //croch
+    public void Crouch(bool crouch)                //crouch
     {
         if (crouch == true)
         {
@@ -107,6 +113,4 @@ public class PlayerController : MonoBehaviour
         //Play Crouch animation
         playerAnimator.SetBool("Crouch", crouch);
     }
-
-
 }
