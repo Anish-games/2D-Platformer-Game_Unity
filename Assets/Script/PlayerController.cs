@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public ScoreController scoreController;
+
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private BoxCollider2D boxCol;
 
@@ -20,6 +22,12 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rd2d = gameObject.GetComponent<Rigidbody2D>();
+    }
+
+    public void PickUpKey()
+    {
+        Debug.Log("Player Picked the key");
+        scoreController.IncreaseScore(10);
     }
 
     private void Start()
