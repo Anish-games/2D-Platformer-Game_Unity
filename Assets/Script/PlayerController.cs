@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +23,20 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rd2d = gameObject.GetComponent<Rigidbody2D>();
+    }
+
+    public void KillPlayer()
+    {
+        Debug.Log("Player get hit");
+        //scoreController.IncreaseScore(10);
+        //Destroy(gameObject);
+        ReloadLevel();
+    }
+
+    private void ReloadLevel()
+    {
+        SceneManager.LoadScene(0);
+       
     }
 
     public void PickUpKey()
