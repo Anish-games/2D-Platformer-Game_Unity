@@ -4,19 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOverController : MonoBehaviour
+
+public class LobbyController : MonoBehaviour
 {
-    
-    public Button RestartButton;
+    public Button StartButton;
     public Button QuitButton;
     private void Awake()
     {
-        RestartButton.onClick.AddListener(ReloadLevel);
+        StartButton.onClick.AddListener(ReloadLevel);
         QuitButton.onClick.AddListener(QuitGame);
-    }
-    public void PlayerDie()
-    {
-        gameObject.SetActive(true);
     }
     private void ReloadLevel()
     {
@@ -24,8 +20,8 @@ public class GameOverController : MonoBehaviour
 
     }
     public void QuitGame()
-    {
-        Application.Quit();
+    { 
+      Application.Quit();
         Debug.Log("Game is exiting");
     }
 }
