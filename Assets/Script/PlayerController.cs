@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public ScoreController scoreController;
+    public GameOverController gameOverController;
 
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private BoxCollider2D boxCol;
@@ -30,14 +31,11 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player get hit");
         //scoreController.IncreaseScore(10);
         //Destroy(gameObject);
-        ReloadLevel();
-    }
-
-    private void ReloadLevel()
-    {
-        SceneManager.LoadScene(0);
+        gameOverController.PlayerDie();
        
     }
+
+    
 
     public void PickUpKey()
     {
