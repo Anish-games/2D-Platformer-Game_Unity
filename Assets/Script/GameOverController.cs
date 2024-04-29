@@ -23,9 +23,8 @@ public class GameOverController : MonoBehaviour
         SceneManager.LoadScene(1);
 
     }
-    public void QuitGame()
+    void QuitGame()
     {
-        Application.Quit();
-        Debug.Log("Game is exiting");
+        SceneManager.LoadScene(0);
     }
 }

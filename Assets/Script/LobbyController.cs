@@ -9,6 +9,7 @@ public class LobbyController : MonoBehaviour
 {
     public Button StartButton;
     public Button QuitButton;
+    public GameObject LevelSelections;
     private void Awake()
     {
         StartButton.onClick.AddListener(ReloadLevel);
@@ -16,8 +17,8 @@ public class LobbyController : MonoBehaviour
     }
     private void ReloadLevel()
     {
-        SceneManager.LoadScene(1);
-
+        //SceneManager.LoadScene(1);
+        LevelSelections.SetActive (true);
     }
     public void QuitGame()
     { 
